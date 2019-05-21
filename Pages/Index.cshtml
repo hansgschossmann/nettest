@@ -44,6 +44,19 @@
         }
         <p>@interfaceInfo.Item1 (IP: @ipAddresses, GW: @gatewayAddresses, DNS: @dnsServerAddresses)</p>
     }
+    @if (Model.Healthy)
+    {
+        <form method="post" asp-page="Health" asp-route-healthy="false">
+            <button>Disable nettest health</button>
+        </form>
+    }
+    else
+    {
+        <form method="post" asp-page="Health" asp-route-healthy="true">
+            <button>Enable nettest health</button>
+        </form>
+    }
+    <p></p>
     <form method="post">
         <button>Check URL</button>
         <input type="url" name="UrlToCheck" value="@Model.UrlToCheck/Responder" asp-fragment="" alt="Or Click Me" size="40">
