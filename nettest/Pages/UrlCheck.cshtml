@@ -1,0 +1,20 @@
+﻿@page
+@model nettest.Pages.UrlCheckModel
+@{
+    ViewData["Title"] = "UrlCheck";
+}
+
+    <div class="text-center">
+        <h1 class="display-3">URL check results</h1>
+    </div>
+
+    <div class="text-xl-left">
+        @foreach (var result in Model.PingResults)
+        {
+            <p>@result</p>
+        }
+        @foreach (var result in Model.HttpResults)
+        {
+            <p>@result</p>
+        }
+    </div>
