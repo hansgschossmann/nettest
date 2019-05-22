@@ -30,6 +30,9 @@ namespace nettest.Pages
                 return;
             }
 
+            IPAddress clientIpAddress = HttpContext.Connection.RemoteIpAddress;
+            PingResults.Add($"Request was originated from client with address: {clientIpAddress.ToString()}");
+
             List<IPAddress> ipAddressesToPing = new List<IPAddress>();
             if (checkUri.HostNameType == UriHostNameType.Dns)
             {
@@ -63,16 +66,15 @@ namespace nettest.Pages
                     byte[] buffer = Encoding.ASCII.GetBytes(data);
                     int timeout = 30;
                     PingReply reply = pingSender.Send(ipAddressToPing, timeout, buffer, options);
-                    string pingResult = $"Ping IP:  {reply.Address}";
+                    PingResults.Add($"URL to check resolves to IP:  {reply.Address}");
                     if (reply.Status == IPStatus.Success)
                     {
-                        pingResult += $", succeeded, Roundtrip: {reply.RoundtripTime} ms";
+                        PingResults.Add($"Try to ping succeeded, Roundtrip: {reply.RoundtripTime} ms");
                     }
                     else
                     {
-                        pingResult += " , failed";
+                        PingResults.Add($"Try to ping failed!");
                     }
-                    PingResults.Add(pingResult);
                 }
             }
 
