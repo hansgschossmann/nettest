@@ -1,23 +1,26 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
+using System;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Linq;
 
 namespace nettest
 {
     public class NetInfo
     {
+        public string HostName;
+        public string DomainName;
+        public List<Tuple<string, List<string>, List<string>, List<string>>> InterfaceInfos;
+        public DateTime CurrentDateTime;
+
         public NetInfo()
         {
             HostName = string.Empty;
             DomainName = string.Empty;
             InterfaceInfos = new List<Tuple<string, List<string>, List<string>, List<string>>>();
         }
-
-        public string HostName;
-        public string DomainName;
-        public List<Tuple<string, List<string>, List<string>, List<string>>> InterfaceInfos;
-        public DateTime CurrentDateTime;
 
         public void Update()
         {

@@ -44,6 +44,14 @@
         }
         <p>@interfaceInfo.Item1 (IP: @ipAddresses, GW: @gatewayAddresses, DNS: @dnsServerAddresses)</p>
     }
+    @if (Model.HttpInfo.HttpHeaders.Count > 0)
+    {
+        <p>Http Headers (only some):</p>
+        foreach (var header in Model.HttpInfo.HttpHeaders)
+        {
+            <p>@header.Key: @header.Value</p>
+        }
+    }
     @if (Model.Healthy)
     {
         <form method="post" asp-page="Health" asp-route-healthy="false">

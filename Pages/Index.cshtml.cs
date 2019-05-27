@@ -9,6 +9,8 @@ namespace nettest.Pages
     {
         public NetInfo NetInfo;
 
+        public HttpInfo HttpInfo;
+
         public bool Healthy;
 
         [Url]
@@ -21,6 +23,8 @@ namespace nettest.Pages
             UrlToCheck = "http://localhost:8080";
             NetInfo = new NetInfo();
             NetInfo.Update();
+            HttpInfo = new HttpInfo();
+            HttpInfo.Update(Request);
             Healthy = HealthModel.Healthy;
         }
 

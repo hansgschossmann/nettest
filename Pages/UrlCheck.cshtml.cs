@@ -87,13 +87,13 @@ namespace nettest.Pages
             {
                 if (httpResponse.Content.Headers.ContentType.MediaType.Equals("application/json", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    NetInfo netInfo = JsonConvert.DeserializeObject<NetInfo>(httpResult);
+                    ResponderResult result = JsonConvert.DeserializeObject<ResponderResult>(httpResult);
                     HttpResults.Add($"Json response:");
-                    HttpResults.Add($"Time: {netInfo.CurrentDateTime}");
-                    HttpResults.Add($"Hostname: {netInfo.HostName}");
-                    HttpResults.Add($"Domain: {netInfo.DomainName}");
+                    HttpResults.Add($"Time: {result.NetInfo.CurrentDateTime}");
+                    HttpResults.Add($"Hostname: {result.NetInfo.HostName}");
+                    HttpResults.Add($"Domain: {result.NetInfo.DomainName}");
                     HttpResults.Add($"Interfaces (IPv4 info only):");
-                    foreach (var interfaceInfo in netInfo.InterfaceInfos)
+                    foreach (var interfaceInfo in result.NetInfo.InterfaceInfos)
                     {
                         string ipAddresses = string.Empty;
                         foreach (var ipAddress in interfaceInfo.Item2)
@@ -123,6 +123,14 @@ namespace nettest.Pages
                             dnsServerAddresses = "-";
                         }
                         HttpResults.Add($"{interfaceInfo.Item1} (IP: {ipAddresses}, GW: {gatewayAddresses}, DNS: {dnsServerAddresses}");
+                    }
+                    if (result.HttpInfo.HttpHeaders.Count > 0)
+                    {
+                        HttpResults.Add($"Http headers (only some):");
+                        foreach (var header in result.HttpInfo.HttpHeaders)
+                        {
+                            HttpResults.Add($"{header.Key}: {header.Value}");
+                        }
                     }
                 }
                 else
